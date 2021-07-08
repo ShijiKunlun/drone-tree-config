@@ -30,7 +30,7 @@ Currently supports
 
 Backend specific options
 
-* `SERVER`: Custom SCM server (also used by Gitlab / Bitbucket)
+* `SERVER`: Custom SCM server (also used by Gitlab / Bitbucket / Gitea)
 * GitHub:
   * `GITHUB_TOKEN`: Github personal access token. Only needs repo rights. See [here][1].
 * GitLab:
@@ -39,7 +39,10 @@ Backend specific options
   * `BITBUCKET_AUTH_SERVER`: Custom auth server (uses SERVER if empty)
   * `BITBUCKET_CLIENT`: Credentials for Bitbucket access
   * `BITBUCKET_SECRET`: Credentials for Bitbucket access
-
+* Gitea:
+  * `GITEA_TOKEN`: Gitea personal access token.
+  * `GITEA_SERVER`: Custom Gitea server url (uses SERVER if empty)
+  
 If `PLUGIN_CONCAT` is not set, the first found `.drone.yml` will be used.
 
 #### Example docker-compose

@@ -51,6 +51,20 @@ func WithBitBucketSecret(bitBucketSecret string) func(*Plugin) {
 	}
 }
 
+// WithGiteaToken configures with the gitea token specified
+func WithGiteaToken(giteaToken string) func(*Plugin) {
+	return func(p *Plugin) {
+		p.giteaToken = giteaToken
+	}
+}
+
+// WithGiteaServer configures with the gitea server specified
+func WithGiteaServer(giteaServer string) func(*Plugin) {
+	return func(p *Plugin) {
+		p.giteaServer = giteaServer
+	}
+}
+
 // WithConcat configures with concat enabled or disabled
 func WithConcat(concat bool) func(*Plugin) {
 	return func(p *Plugin) {

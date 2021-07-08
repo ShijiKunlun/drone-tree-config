@@ -1,4 +1,4 @@
-FROM golang:1.14-alpine AS builder
+FROM golang:1.16-alpine AS builder
 
 RUN true \
   && apk add -U --no-cache ca-certificates git binutils
@@ -7,7 +7,8 @@ ADD . /go/src/github.com/bitsbeats/drone-tree-config
 WORKDIR /go/src/github.com/bitsbeats/drone-tree-config
 
 ENV CGO_ENABLED=0 \
-    GO111MODULE=on
+    GO111MODULE=on \
+    GOPROXY=https://goproxy.cn,direct
 
 RUN true \
   && go test -mod=vendor ./plugin \

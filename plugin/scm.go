@@ -16,6 +16,8 @@ import (
 // NewScmClient creates a new client for the git provider
 func (p *Plugin) NewScmClient(ctx context.Context, uuid uuid.UUID, repo drone.Repo) (scmClient scm_clients.ScmClient, err error) {
 	switch {
+	case p.giteaToken != "":
+		scmClient, err = scm_clients.NewGiteaClient(ctx, uuid, p.giteaServer, p.giteaToken, repo)
 	case p.gitHubToken != "":
 		scmClient, err = scm_clients.NewGitHubClient(ctx, uuid, p.server, p.gitHubToken, repo)
 	case p.gitLabToken != "":
@@ -51,8 +53,15 @@ func (p *Plugin) getScmChanges(ctx context.Context, req *request) ([]string, err
 		}
 	} else {
 		// use diff to get changed files
+		repoBranch := req.Repo.Branch
+		commitBranch := req.Build.Source
 		before := req.Build.Before
 		after := req.Build.After
+
+		// check for branch pr
+		if commitBranch != repoBranch {
+			before = repoBranch
+		}
 
 		// check for broken before
 		if before == "0000000000000000000000000000000000000000" || before == "" {

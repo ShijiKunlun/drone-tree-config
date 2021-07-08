@@ -27,6 +27,8 @@ type (
 		BitBucketAuthServer string        `envconfig:"BITBUCKET_AUTH_SERVER"`
 		BitBucketClient     string        `envconfig:"BITBUCKET_CLIENT"`
 		BitBucketSecret     string        `envconfig:"BITBUCKET_SECRET"`
+		GiteaToken          string        `envconfig:"GITEA_TOKEN"`
+		GiteaServer         string        `envconfig:"GITEA_SERVER" default:"https://gitea.com"`
 		ConsiderFile        string        `envconfig:"PLUGIN_CONSIDER_FILE"`
 		CacheTTL            time.Duration `envconfig:"PLUGIN_CACHE_TTL"`
 	}
@@ -44,7 +46,7 @@ func main() {
 	if spec.Secret == "" {
 		logrus.Fatalln("missing secret key")
 	}
-	if spec.GitHubToken == "" && spec.GitLabToken == "" && (spec.BitBucketClient == "" || spec.BitBucketSecret == "") {
+	if spec.GiteaToken == "" && spec.GitHubToken == "" && spec.GitLabToken == "" && (spec.BitBucketClient == "" || spec.BitBucketSecret == "") {
 		logrus.Warnln("missing SCM credentials, e.g. GitHub token")
 	}
 	if spec.Address == "" {
@@ -67,6 +69,8 @@ func main() {
 			plugin.WithGithubToken(spec.GitHubToken),
 			plugin.WithGitlabToken(spec.GitLabToken),
 			plugin.WithGitlabServer(spec.GitLabServer),
+			plugin.WithGiteaToken(spec.GiteaToken),
+			plugin.WithGiteaServer(spec.GiteaServer),
 			plugin.WithConsiderFile(spec.ConsiderFile),
 			plugin.WithCacheTTL(spec.CacheTTL),
 		),

@@ -24,6 +24,8 @@ type (
 		bitBucketAuthServer string
 		bitBucketClient     string
 		bitBucketSecret     string
+		giteaToken          string
+		giteaServer         string
 
 		concat        bool
 		fallback      bool
